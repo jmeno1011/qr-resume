@@ -30,7 +30,7 @@ export default function UploadZone({ onFile }: Props) {
         className="font-mono text-xs uppercase tracking-widest mb-6"
         style={{ color: "var(--muted)" }}
       >
-        — PDF 이력서를 업로드하세요 —
+        — public/Copy of 03_2026_Doh_Kim_Resume.pdf 또는 업로드 파일 —
       </p>
 
       {/* Drop zone */}
@@ -56,7 +56,7 @@ export default function UploadZone({ onFile }: Props) {
             {dragging ? "여기에 놓으세요" : "파일 선택 또는 드래그"}
           </p>
           <p className="font-mono text-xs mt-1" style={{ color: "var(--muted)" }}>
-            .pdf 파일만 지원됩니다
+            저장소 PDF가 없으면 직접 업로드할 수 있습니다
           </p>
         </div>
       </button>

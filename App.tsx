@@ -1,11 +1,20 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import QRCodeCanvas from "./components/QRCodeCanvas";
 import PdfViewer from "./components/PdfViewer";
 import UploadZone from "./components/UploadZone";
 
+const REPO_PDF_FILE_NAME = "Copy of 03_2026_Doh_Kim_Resume.pdf";
+const REPO_PDF_PATH = `${import.meta.env.BASE_URL}${encodeURIComponent(REPO_PDF_FILE_NAME)}`;
+
 export type AppState =
   | { phase: "idle" }
-  | { phase: "viewing"; pdfUrl: string; fileName: string; shareUrl: string };
+  | {
+      phase: "viewing";
+      pdfUrl: string;
+      fileName: string;
+      shareUrl: string;
+      source: "blob" | "static";
+    };
 
 export default function App() {
   const [state, setState] = useState<AppState>({ phase: "idle" });
@@ -13,15 +22,53 @@ export default function App() {
 
   const handleFile = useCallback((file: File) => {
     const url = URL.createObjectURL(file);
-    // In a real deployment the shareUrl would be a hosted URL.
-    // Here we use the current page URL as a demo placeholder.
+    // Uploaded blobs are local-only, so the app URL is the least-misleading share target.
     const shareUrl = window.location.href;
-    setState({ phase: "viewing", pdfUrl: url, fileName: file.name, shareUrl });
+    setState({ phase: "viewing", pdfUrl: url, fileName: file.name, shareUrl, source: "blob" });
     setShowQR(false);
   }, []);
 
+  useEffect(() => {
+    let active = true;
+
+    const loadRepoPdf = async () => {
+      try {
+        const response = await fetch(REPO_PDF_PATH, { method: "HEAD" });
+        const contentType = response.headers.get("content-type") ?? "";
+
+        if (!active || !response.ok || !contentType.includes("pdf")) {
+          return;
+        }
+
+        setState((current) => {
+          if (current.phase === "viewing") {
+            return current;
+          }
+
+          return {
+            phase: "viewing",
+            pdfUrl: REPO_PDF_PATH,
+            fileName: REPO_PDF_FILE_NAME,
+            shareUrl: new URL(REPO_PDF_PATH, window.location.href).toString(),
+            source: "static",
+          };
+        });
+      } catch {
+        // Leave the app in upload mode when no committed PDF is present.
+      }
+    };
+
+    void loadRepoPdf();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const handleReset = () => {
-    if (state.phase === "viewing") URL.revokeObjectURL(state.pdfUrl);
+    if (state.phase === "viewing" && state.source === "blob") {
+      URL.revokeObjectURL(state.pdfUrl);
+    }
     setState({ phase: "idle" });
     setShowQR(false);
   };
