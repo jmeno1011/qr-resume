@@ -41,7 +41,7 @@ export default function PdfViewer({ url, fileName }: Props) {
             style={{ background: "var(--cream)" }}
           >
             <p className="font-mono text-xs animate-pulse" style={{ color: "var(--muted)" }}>
-              로딩 중...
+              Loading...
             </p>
           </div>
         )}

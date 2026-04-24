@@ -30,7 +30,7 @@ export default function UploadZone({ onFile }: Props) {
         className="font-mono text-xs uppercase tracking-widest mb-6"
         style={{ color: "var(--muted)" }}
       >
-        — public/Copy of 03_2026_Doh_Kim_Resume.pdf 또는 업로드 파일 —
+        — public/resume.pdf or upload a file —
       </p>
 
       {/* Drop zone */}
@@ -53,10 +53,10 @@ export default function UploadZone({ onFile }: Props) {
         </div>
         <div>
           <p className="font-display text-lg" style={{ color: "var(--ink)" }}>
-            {dragging ? "여기에 놓으세요" : "파일 선택 또는 드래그"}
+            {dragging ? "Drop it here" : "Choose a file or drag and drop"}
           </p>
           <p className="font-mono text-xs mt-1" style={{ color: "var(--muted)" }}>
-            저장소 PDF가 없으면 직접 업로드할 수 있습니다
+            If the repo PDF is missing, you can upload one here
           </p>
         </div>
       </button>
@@ -73,7 +73,7 @@ export default function UploadZone({ onFile }: Props) {
       <div className="fade-up-delay mt-8 flex items-center gap-3">
         <div className="h-px w-16" style={{ background: "var(--ink)" }} />
         <span className="font-mono text-xs" style={{ color: "var(--muted)" }}>
-          QR 코드로 바로 공유
+          Share instantly with a QR code
         </span>
         <div className="h-px w-16" style={{ background: "var(--ink)" }} />
       </div>

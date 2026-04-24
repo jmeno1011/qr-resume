@@ -3,7 +3,7 @@ import QRCodeCanvas from "./components/QRCodeCanvas";
 import PdfViewer from "./components/PdfViewer";
 import UploadZone from "./components/UploadZone";
 
-const REPO_PDF_FILE_NAME = "Copy of 03_2026_Doh_Kim_Resume.pdf";
+const REPO_PDF_FILE_NAME = "resume.pdf";
 const REPO_PDF_PATH = `${import.meta.env.BASE_URL}${encodeURIComponent(REPO_PDF_FILE_NAME)}`;
 
 export type AppState =
@@ -101,13 +101,13 @@ export default function App() {
               }}
             >
               <QRIcon />
-              QR 코드
+              QR Code
             </button>
             <button
               onClick={handleReset}
               className="px-4 py-2 text-xs font-mono uppercase tracking-wider border border-black/20 text-black/40 hover:border-black/60 hover:text-black/70 transition-all duration-200"
             >
-              ✕ 초기화
+              Reset
             </button>
           </div>
         )}
@@ -133,9 +133,9 @@ export default function App() {
                 style={{ background: "var(--surface)" }}
               >
                 <div className="text-center">
-                  <p className="font-display text-xl mb-1">공유하기</p>
+                  <p className="font-display text-xl mb-1">Share</p>
                   <p className="text-xs font-mono" style={{ color: "var(--muted)" }}>
-                    QR 코드로 이력서를 공유하세요
+                    Share this resume with a QR code
                   </p>
                 </div>
 
@@ -166,7 +166,7 @@ export default function App() {
                     (e.currentTarget as HTMLElement).style.color = "var(--accent)";
                   }}
                 >
-                  ↓ PDF 다운로드
+                  ↓ Download PDF
                 </a>
               </aside>
             )}
